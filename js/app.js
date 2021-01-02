@@ -12,9 +12,8 @@ const title = document.querySelector('h2');
 const ctx = canvas.getContext('2d');
 
 //game
-let gameIsRunning = false;
-
-let turbo = false;
+let gameIsRunning = true;
+let gameStarted = false;
 
 let fps = 5;
 const tileSize = 50;
@@ -189,7 +188,7 @@ function gameOver() {
 
 //keys
 function keyPush(event) {
-    if (event.keyCode == 32) {
+    if (event.keyCode == 32 && !gameStarted) {
         kanter();
     } else {
         switch (event.key) {
@@ -226,20 +225,18 @@ function keyPush(event) {
 }
 
 const kanter = () => {
-    if (!gameIsRunning) {
-        gameIsRunning = true;
-        let counter = 3;
-        const kanDano = () => {
-            if (counter == 0) {
-                startGame();
-            } else {
-                startGameEl.innerHTML = `<div class="counter">${counter--}</div>`;
-                setTimeout(kanDano, 1000);
-            }
-        };
+    gameStarted = true;
+    let counter = 3;
+    const kanDano = () => {
+        if (counter == 0) {
+            startGame();
+        } else {
+            startGameEl.innerHTML = `<div class="counter">${counter--}</div>`;
+            setTimeout(kanDano, 1000);
+        }
+    };
 
-        kanDano();
-    }
+    kanDano();
 }
 
 startGameEl.addEventListener('click', kanter);
