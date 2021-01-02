@@ -314,6 +314,8 @@ function handleTouchMove(evt) {
     yDown = null;
 };
 
+canvas.addEventListener('click', () => turnDown());
+
 //keys
 function keyPush(event) {
     if (event.keyCode == 32 && !gameStarted) {
