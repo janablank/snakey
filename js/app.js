@@ -129,7 +129,7 @@ function drawStuff() {
     })
 
     // snake head
-    ctx.drawImage(head, snakePosX - 20, snakePosY - 20, tileSize + 40, tileSize + 40);
+    ctx.drawImage(head, snakePosX - 10, snakePosY - 10, tileSize + 20, tileSize + 20);
 }
 
 //draw rect
