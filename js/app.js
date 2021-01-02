@@ -197,6 +197,80 @@ function gameOver() {
     gameIsRunning = false;
 }
 
+const turnLeft = () => {
+    if (velocityX !== 1) {
+        velocityX = -1;
+        velocityY = 0;
+    }
+}
+
+const turnUp = () => {
+    if (velocityY !== 1) {
+        velocityX = 0;
+        velocityY = -1;
+    }
+}
+
+const turnRight = () => {
+    if (velocityX !== -1) {
+        velocityX = 1;
+        velocityY = 0;
+    }
+}
+
+const turnDown = () => {
+    if (velocityY !== 1) {
+        velocityX = 0;
+        velocityY = 1;
+    }
+}
+
+document.addEventListener('touchstart', handleTouchStart, false);        
+document.addEventListener('touchmove', handleTouchMove, false);
+
+var xDown = null;                                                        
+var yDown = null;
+
+function getTouches(evt) {
+  return evt.touches ||             // browser API
+         evt.originalEvent.touches; // jQuery
+}                                                     
+
+function handleTouchStart(evt) {
+    const firstTouch = getTouches(evt)[0];                                      
+    xDown = firstTouch.clientX;                                      
+    yDown = firstTouch.clientY;                                      
+};                                                
+
+function handleTouchMove(evt) {
+    if ( ! xDown || ! yDown ) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;                                    
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( xDiff > 0 ) {
+            turnLeft();
+        } else {
+            turnRight();
+        }                       
+    } else {
+        if ( yDiff > 0 ) {
+            turnUp(); 
+        } else { 
+            turnDown();
+        }                                                                 
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;                                             
+};
+
 //keys
 function keyPush(event) {
     if (event.keyCode == 32 && !gameStarted) {
@@ -204,28 +278,16 @@ function keyPush(event) {
     } else {
         switch (event.key) {
             case "ArrowLeft":
-                if (velocityX !== 1) {
-                    velocityX = -1;
-                    velocityY = 0;
-                }
+               turnLeft();
                 break;
             case "ArrowUp":
-                if (velocityY !== 1) {
-                    velocityX = 0;
-                    velocityY = -1;
-                }
+                turnUp();
                 break;
             case "ArrowRight":
-                if (velocityX !== -1) {
-                    velocityX = 1;
-                    velocityY = 0;
-                }
+               turnRight();
                 break;
             case "ArrowDown":
-                if (velocityY !== 1) {
-                    velocityX = 0;
-                    velocityY = 1;
-                }
+                turnDown();
                 break;
             default:
                 //restart
