@@ -27,11 +27,19 @@ h2 {
   transform: translate(0, 0);
 }
 
-#start-game {
+#start-game,
+#restart-game {
   margin-top: 200px;
 }
 
-#start-game img {
+#start-game button,
+#restart-game button {
+  background-color: black;
+  padding: 1em;
+}
+
+#start-game img,
+#restart-game img {
   width: 400px;
 }
 
@@ -53,7 +61,9 @@ h2 {
     font-size: 2em;
     margin-top: -0.5em;
   }
-  #start-game img {
+
+  #start-game img,
+  #restart-game img {
     width: 330px;
   }
 }

@@ -1,12 +1,16 @@
 const getImg = name => `asssets/img/${name}`;
 
 const startGameEl = document.getElementById('start-game');
+const restartGameEl = document.getElementById('restart-game');
+const gameEl = document.getElementById('game');
 
 const audio = document.getElementById('nyanya');
 const ublublbubl = document.getElementById('ublublbubl');
+const chrm = document.getElementById('chrm');
+
 audio.playbackRate = 0.7;
 audio.currentTime = 1;
-audio.volume = 0.5;
+audio.volume = 0.3;
 ublublbubl.playbackRate = 2;
 
 //listeners
@@ -17,6 +21,13 @@ const canvas = document.querySelector('canvas');
 const title = document.querySelector('h2');
 
 const ctx = canvas.getContext('2d');
+
+restartGameEl.addEventListener('click', () => {
+
+    if (!gameIsRunning) {
+        location.reload();
+    }
+});
 
 //game
 let gameIsRunning = true;
@@ -78,7 +89,7 @@ function gameLoop() {
 
 function startGame() {
     startGameEl.style.display = 'none';
-    document.getElementById('game').style.display = 'block';
+    gameEl.style.display = 'block';
     resetFood();
     gameLoop();
 }
@@ -125,6 +136,7 @@ function moveStuff() {
     if (snakePosX === foodPosX && snakePosY === foodPosY) {
         title.textContent = ++score;
         snakeLength++;
+        chrm.play();
         if (fps < 10) {
             fps += 0.3;
             audio.playbackRate += 0.03;
@@ -222,6 +234,8 @@ function gameOver() {
     ublublbubl.play(); //tulic was here
     title.innerHTML = `☠️ <strong> ${score} </strong> ☠️`;
     gameIsRunning = false;
+    gameEl.style.display = 'none';
+    restartGameEl.style.display = 'block';
 }
 
 const turnLeft = () => {
@@ -317,10 +331,6 @@ function keyPush(event) {
                 break;
             case "ArrowDown":
                 turnDown();
-                break;
-            default:
-                //restart
-                if (!gameIsRunning) location.reload();
                 break;
         }
     }
