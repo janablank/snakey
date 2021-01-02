@@ -2,6 +2,12 @@ const getImg = name => `asssets/img/${name}`;
 
 const startGameEl = document.getElementById('start-game');
 
+const audio = document.getElementById('nyanya');
+const ublublbubl = document.getElementById('ublublbubl');
+audio.playbackRate = 0.7;
+audio.currentTime = 1;
+ublublbubl.playbackRate = 2;
+
 //listeners
 document.addEventListener('keydown', keyPush);
 
@@ -105,6 +111,7 @@ function moveStuff() {
         snakeLength++;
         if (fps < 10) {
             fps += 0.3;
+            audio.playbackRate += 0.03;
         }
         resetFood();
     }
@@ -184,6 +191,8 @@ function resetFood() {
 
 //gameover
 function gameOver() {
+    audioStop();
+    ublublbubl.play(); //tulic was here
     title.innerHTML = `☠️ <strong> ${score} </strong> ☠️`;
     gameIsRunning = false;
 }
@@ -226,9 +235,17 @@ function keyPush(event) {
     }
 }
 
+const audioStart = () => {
+    audio.play();
+}
+const audioStop = () => {
+    audio.pause();
+}
+
 const kanter = () => {
     gameStarted = true;
     let counter = 3;
+    audioStart();
     const kanDano = () => {
         if (counter == 0) {
             startGame();
