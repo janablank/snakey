@@ -44,8 +44,23 @@ let snakeLength = 3;
 const head = new Image();
 head.src = getImg('snake-face.png');
 
-const epl = new Image();
-epl.src = getImg('epl.png');
+const food = [];
+
+[
+    'ant',
+    'beer',
+    'epl',
+    'garlic',
+    'hotdog',
+    'martini',
+    'worm'
+].forEach(png => {
+    const img = new Image();
+    img.src = getImg(`food/${png}.png`);
+    food.push(img);
+})
+
+let fruitToDraw = food[Math.floor(Math.random() * food.length)];
 
 //food
 let foodPosX = 0;
@@ -114,6 +129,7 @@ function moveStuff() {
             fps += 0.3;
             audio.playbackRate += 0.03;
         }
+        fruitToDraw = food[Math.floor(Math.random() * food.length)];
         resetFood();
     }
 }
@@ -128,7 +144,9 @@ function drawStuff() {
         drawGrid();
 
         //foood
-        ctx.drawImage(epl, foodPosX + 10, foodPosY + 10, tileSize - 20, tileSize - 20);
+        if (!!food.length) {
+            ctx.drawImage(fruitToDraw, foodPosX + 10, foodPosY + 10, tileSize - 20, tileSize - 20);
+        }
 
         //tail
         tail.forEach((snakePart, index) => {
@@ -226,51 +244,52 @@ const turnDown = () => {
     }
 }
 
-document.addEventListener('touchstart', handleTouchStart, false);        
+document.addEventListener('touchstart', handleTouchStart, false);
 document.addEventListener('touchmove', handleTouchMove, false);
 
-var xDown = null;                                                        
+var xDown = null;
 var yDown = null;
 
 function getTouches(evt) {
-  return evt.touches ||             // browser API
-         evt.originalEvent.touches; // jQuery
-}                                                     
+    return evt.touches || // browser API
+        evt.originalEvent.touches; // jQuery
+}
 
 function handleTouchStart(evt) {
-    const firstTouch = getTouches(evt)[0];                                      
-    xDown = firstTouch.clientX;                                      
-    yDown = firstTouch.clientY;                                      
-};                                                
+    const firstTouch = getTouches(evt)[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+};
 
 function handleTouchMove(evt) {
     evt.preventDefault();
-    if ( ! xDown || ! yDown ) {
+    if (!xDown || !yDown) {
         return;
     }
 
-    var xUp = evt.touches[0].clientX;                                    
+    var xUp = evt.touches[0].clientX;
     var yUp = evt.touches[0].clientY;
 
     var xDiff = xDown - xUp;
     var yDiff = yDown - yUp;
 
-    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-        if ( xDiff > 0 ) {
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        /*most significant*/
+        if (xDiff > 0) {
             turnLeft();
         } else {
             turnRight();
-        }                       
+        }
     } else {
-        if ( yDiff > 0 ) {
-            turnUp(); 
-        } else { 
+        if (yDiff > 0) {
+            turnUp();
+        } else {
             turnDown();
-        }                                                                 
+        }
     }
     /* reset values */
     xDown = null;
-    yDown = null;                                             
+    yDown = null;
 };
 
 //keys
@@ -280,13 +299,13 @@ function keyPush(event) {
     } else {
         switch (event.key) {
             case "ArrowLeft":
-               turnLeft();
+                turnLeft();
                 break;
             case "ArrowUp":
                 turnUp();
                 break;
             case "ArrowRight":
-               turnRight();
+                turnRight();
                 break;
             case "ArrowDown":
                 turnDown();
