@@ -112,24 +112,26 @@ function moveStuff() {
 
 //draw shit
 function drawStuff() {
-    //bcg
-    rectangle("#00db96", 0, 0, canvas.width, canvas.height);
+    if (gameIsRunning) {
+        //bcg
+        rectangle("#00db96", 0, 0, canvas.width, canvas.height);
 
-    //grid
-    drawGrid();
+        //grid
+        drawGrid();
 
-    //foood
-    ctx.drawImage(epl, foodPosX + 10, foodPosY + 10, tileSize - 20, tileSize - 20);
+        //foood
+        ctx.drawImage(epl, foodPosX + 10, foodPosY + 10, tileSize - 20, tileSize - 20);
 
-    //tail
-    tail.forEach((snakePart, index) => {
-        if (index != tail.length - 1) {
-            vircle("#bada55", snakePart.x, snakePart.y, tileSize / 2, true)
-        }
-    })
+        //tail
+        tail.forEach((snakePart, index) => {
+            if (index != tail.length - 1) {
+                vircle("#bada55", snakePart.x, snakePart.y, tileSize / 2, true)
+            }
+        })
 
-    // snake head
-    ctx.drawImage(head, snakePosX - 10, snakePosY - 10, tileSize + 20, tileSize + 20);
+        // snake head
+        ctx.drawImage(head, snakePosX - 10, snakePosY - 10, tileSize + 20, tileSize + 20);
+    }
 }
 
 //draw rect
