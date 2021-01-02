@@ -138,7 +138,7 @@ function moveStuff() {
 function drawStuff() {
     if (gameIsRunning) {
         //bcg
-        rectangle("#00db96", 0, 0, canvas.width, canvas.height);
+        rectangle("#d683c9", 0, 0, canvas.width, canvas.height);
 
         //grid
         drawGrid();
@@ -151,7 +151,9 @@ function drawStuff() {
         //tail
         tail.forEach((snakePart, index) => {
             if (index != tail.length - 1) {
-                vircle("#bada55", snakePart.x, snakePart.y, tileSize / 2, true)
+                const coeficient = 2.8;
+                const radius = tileSize / coeficient;
+                vircle("#76ff03", snakePart.x + radius * (coeficient / 2), snakePart.y + radius * (coeficient / 2), radius, false, 5)
             }
         })
 
@@ -166,9 +168,15 @@ function rectangle(color, x, y, width, height) {
     ctx.fillRect(x, y, width, height);
 }
 
-function vircle(color, x, y, r, center = false) {
+function vircle(color, x, y, r, center = false, outline = 0) {
     const vircle = new Path2D();
     vircle.arc(x + (center ? r : 0), y + (center ? r : 0), r, 0, Math.PI * 2);
+    if (outline) {
+        const border = new Path2D();
+        border.arc(x, y, r, 0, 2 * Math.PI);
+        ctx.lineWidth = outline;
+        ctx.stroke(border);
+    }
     ctx.fillStyle = color;
     ctx.fill(vircle);
 }
@@ -296,7 +304,7 @@ function handleTouchMove(evt) {
 function keyPush(event) {
     if (event.keyCode == 32 && !gameStarted) {
         kanter();
-    } else {
+    } else if (gameStarted) {
         switch (event.key) {
             case "ArrowLeft":
                 turnLeft();
