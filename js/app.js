@@ -6,6 +6,7 @@ const audio = document.getElementById('nyanya');
 const ublublbubl = document.getElementById('ublublbubl');
 audio.playbackRate = 0.7;
 audio.currentTime = 1;
+audio.volume = 0.5;
 ublublbubl.playbackRate = 2;
 
 //listeners
@@ -243,6 +244,7 @@ function handleTouchStart(evt) {
 };                                                
 
 function handleTouchMove(evt) {
+    evt.preventDefault();
     if ( ! xDown || ! yDown ) {
         return;
     }
