@@ -71,6 +71,8 @@ const food = [];
     food.push(img);
 })
 
+const snakeKalrz = ['#76ff03', '#d496f7', '#fdcfdc', '#02ccbc', '#d93ec4', '#ffe88a'];
+
 let fruitToDraw = food[Math.floor(Math.random() * food.length)];
 
 //food
@@ -165,7 +167,7 @@ function drawStuff() {
             if (index != tail.length - 1) {
                 const coeficient = 2.8;
                 const radius = tileSize / coeficient;
-                vircle("#76ff03", snakePart.x + radius * (coeficient / 2), snakePart.y + radius * (coeficient / 2), radius, false, 5)
+                vircle(snakeKalrz[Math.floor(Math.random() * snakeKalrz.length)], snakePart.x + radius * (coeficient / 2), snakePart.y + radius * (coeficient / 2), radius, false, 5)
             }
         })
 
@@ -318,8 +320,13 @@ canvas.addEventListener('click', () => turnDown());
 
 //keys
 function keyPush(event) {
-    if (event.keyCode == 32 && !gameStarted) {
-        kanter();
+    if (event.keyCode == 32) {
+        if (!gameIsRunning) {
+            restartGameEl.click();
+        }
+        if (!gameStarted) {
+            kanter();
+        }
     } else if (gameStarted) {
         switch (event.key) {
             case "ArrowLeft":
