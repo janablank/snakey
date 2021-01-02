@@ -138,6 +138,8 @@ function moveStuff() {
     if (snakePosX === foodPosX && snakePosY === foodPosY) {
         title.textContent = ++score;
         snakeLength++;
+        chrm.pause();
+        chrm.currentTime = 0;
         chrm.play();
         if (fps < 10) {
             fps += 0.3;
@@ -236,7 +238,7 @@ function gameOver() {
     ublublbubl.play(); //tulic was here
     title.innerHTML = `☠️ <strong> ${score} </strong> ☠️`;
     gameIsRunning = false;
-    gameEl.style.display = 'none';
+    canvas.style.display = 'none';
     restartGameEl.style.display = 'block';
 }
 
