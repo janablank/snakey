@@ -20,6 +20,10 @@ h2 {
   margin-top: -0.5em;
 }
 
+h2 img {
+  transform: translateY(10px);
+}
+
 .fade {
   /*opacity: 0.2;*/
   top: 83%;

@@ -55,6 +55,8 @@ let snakeLength = 3;
 const head = new Image();
 head.src = getImg('snake-face.png');
 
+const headDead = `<img src="${getImg('snake-face-dead.png')}" />`
+
 const food = [];
 
 [
@@ -236,7 +238,7 @@ function resetFood() {
 function gameOver() {
     audioStop();
     ublublbubl.play(); //tulic was here
-    title.innerHTML = `☠️ <strong> ${score} </strong> ☠️`;
+    title.innerHTML = `${headDead} <strong> ${score} </strong> ${headDead}`;
     gameIsRunning = false;
     canvas.style.display = 'none';
     restartGameEl.style.display = 'block';
