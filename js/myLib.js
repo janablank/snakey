@@ -6,30 +6,37 @@ const makeRequest = async (url, method = 'GET', data = {}) => {
         credentials: 'same-origin',
     };
 
-    if (method === 'POST') {
-        const fd = new FormData();
+    if (data) {
+        if (method === 'POST') {
+            const fd = new FormData();
 
-        for (const valueName in data) {
-            fd.append(valueName, data[valueName]);
+            for (const valueName in data) {
+                fd.append(valueName, data[valueName]);
+            }
+
+            options.body = fd;
+        } else if (method === 'GET') {
+            const queryPart = new URLSearchParams(data);
+
+            if (url.includes('?')) {
+                url += `&${queryPart}`;
+            } else {
+                url += `?${queryPart}`;
+            }
         }
-
-        options.body = fd;
-    }else if (method === 'GET') {
-
     }
 
     return await fetch(url, options);
 }
 
-const makeActionRequest = async (action, method = 'GET', data = {}) =>{
-    return await makeRequest(`ajax.php?action=${action}`, method, data);
+const makeActionRequest = async (action, method = 'GET', data = {}) => {
+    return await makeRequest(`actions.php?action=${action}`, method, data);
 }
 
-const getRequest = async (action, data = {}) => {
+const getAction = async (action, data = {}) => {
     return await makeActionRequest(action, 'GET', data);
 }
 
-const postRequest = async (action, data = {}) => {
+const postAction = async (action, data = {}) => {
     return await makeActionRequest(action, 'POST', data);
 }
-

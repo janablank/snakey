@@ -242,7 +242,7 @@ function gameOver() {
             }
         }), 1000);
 
-    postRequest('track-score', {
+    postAction('track-score', {
         score
     });
 
