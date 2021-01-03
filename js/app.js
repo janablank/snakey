@@ -241,6 +241,11 @@ function gameOver() {
                 location.reload();
             }
         }), 1000);
+
+    postRequest('track-score', {
+        score
+    });
+
 }
 
 const turnLeft = () => {
