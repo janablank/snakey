@@ -22,13 +22,6 @@ const title = document.querySelector('h2');
 
 const ctx = canvas.getContext('2d');
 
-restartGameEl.addEventListener('click', () => {
-
-    if (!gameIsRunning) {
-        location.reload();
-    }
-});
-
 //game
 let gameIsRunning = true;
 let gameStarted = false;
@@ -242,6 +235,12 @@ function gameOver() {
     gameIsRunning = false;
     canvas.style.display = 'none';
     restartGameEl.style.display = 'block';
+    setTimeout(() =>
+        restartGameEl.addEventListener('click', () => {
+            if (!gameIsRunning) {
+                location.reload();
+            }
+        }), 1000);
 }
 
 const turnLeft = () => {
