@@ -74,13 +74,18 @@ let fruitToDraw = food[Math.floor(Math.random() * food.length)];
 let foodPosX = 0;
 let foodPosY = 0;
 
+const loopLimit = 0;
+let loopCount = 0;
 
 //loop
 function gameLoop() {
     if (gameIsRunning) {
         moveStuff();
         drawStuff();
-        setTimeout(gameLoop, 1000 / fps);
+        if (!loopLimit || loopCount < loopLimit) {
+            loopCount++;
+            setTimeout(gameLoop, 1000 / fps);
+        }
     }
 }
 
@@ -324,7 +329,47 @@ function handleTouchMove(evt) {
     yDown = null;
 };
 
-canvas.addEventListener('click', () => turnDown());
+const getMousePos = e => {
+    var rect = e.target.getBoundingClientRect();
+    return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+        width: rect.width,
+        height: rect.height
+    };
+}
+
+const handleTouch = e => {
+    let {
+        x,
+        y,
+        width
+    } = getMousePos(e);
+
+    const halfWidth = width / 2;
+
+    if (x < halfWidth) {
+        if (y < x) {
+            turnUp();
+        } else if (width - y < x) {
+            turnDown();
+        } else {
+            turnLeft();
+        }
+    } else {
+        y = width - y;
+        x = width - x;
+        if (y < x) {
+            turnDown();
+        } else if (width - y < x) {
+            turnUp();
+        } else {
+            turnRight();
+        }
+    }
+}
+
+canvas.addEventListener('click', handleTouch);
 
 //keys
 function keyPush(event) {
